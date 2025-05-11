@@ -12,5 +12,5 @@ interface TagServiceInterface
     /**
      * 获取指定用户的标签列表
      */
-    public function loadTagsByUser(UserInterface $user): array;
+    public function loadTagsByUser(UserInterface $user): iterable;
 }
