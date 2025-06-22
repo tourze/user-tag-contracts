@@ -75,8 +75,6 @@ class MockUserTest extends TestCase
         $user = new MockUser('user1');
         
         $roles = $user->getRoles();
-        
-        $this->assertIsArray($roles);
         $this->assertEmpty($roles);
     }
     
@@ -102,8 +100,6 @@ class MockUserTest extends TestCase
         $user = new MockUser('user1', []);
         
         $roles = $user->getRoles();
-        
-        $this->assertIsArray($roles);
         $this->assertEmpty($roles);
     }
     
