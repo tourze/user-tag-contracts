@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * 提供一些最通用的标签服务
  */
-#[AutoconfigureTag('user-tag.service')]
+#[AutoconfigureTag(name: 'user-tag.service')]
 interface TagLoaderInterface
 {
     /**

@@ -20,7 +20,6 @@ class TagLoaderInterfaceTest extends TestCase
         
         $result = $loader->loadTagsByUser($user);
         
-        $this->assertIsIterable($result);
         $resultArray = is_array($result) ? $result : iterator_to_array($result);
         $this->assertCount(1, $resultArray);
         $this->assertSame($tag, $resultArray[0]);
@@ -36,7 +35,6 @@ class TagLoaderInterfaceTest extends TestCase
         
         $result = $loader->loadTagsByUser($user);
         
-        $this->assertIsIterable($result);
         $resultArray = is_array($result) ? $result : iterator_to_array($result);
         $this->assertCount(0, $resultArray);
     }
@@ -55,7 +53,6 @@ class TagLoaderInterfaceTest extends TestCase
         
         $result = $loader->loadTagsByUser($user);
         
-        $this->assertIsIterable($result);
         $resultArray = is_array($result) ? $result : iterator_to_array($result);
         $this->assertCount(3, $resultArray);
         $this->assertSame($tag1, $resultArray[0]);
@@ -76,7 +73,6 @@ class TagLoaderInterfaceTest extends TestCase
         
         $result = $loader->loadTagsByUser($user);
         
-        $this->assertIsIterable($result);
         $resultArray = is_array($result) ? $result : iterator_to_array($result);
         $this->assertCount(0, $resultArray);
         $this->assertEmpty($resultArray);

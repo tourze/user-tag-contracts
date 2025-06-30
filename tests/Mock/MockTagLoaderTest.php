@@ -26,7 +26,6 @@ class MockTagLoaderTest extends TestCase
         $user = new MockUser($userIdentifier);
         $result = $loader->loadTagsByUser($user);
         
-        $this->assertIsIterable($result);
         $resultArray = is_array($result) ? $result : iterator_to_array($result);
         $this->assertCount(1, $resultArray);
         $this->assertSame($tag, $resultArray[0]);
@@ -134,7 +133,6 @@ class MockTagLoaderTest extends TestCase
         
         $result = $loader->loadTagsByUser($nonExistentUser);
         
-        $this->assertIsIterable($result);
         $resultArray = is_array($result) ? $result : iterator_to_array($result);
         $this->assertCount(0, $resultArray);
         $this->assertEmpty($resultArray);
