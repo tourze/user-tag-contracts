@@ -1,136 +1,55 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tourze\UserTagContracts\Tests;
 
+use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
-use Tourze\UserTagContracts\Tests\Mock\MockTag;
+use Tourze\UserTagContracts\TagInterface;
 
-class TagInterfaceTest extends TestCase
+/**
+ * @internal
+ */
+#[CoversClass(TagInterface::class)]
+final class TagInterfaceTest extends TestCase
 {
-    public function testGetName_returnsCorrectName(): void
+    protected function setUp(): void
     {
-        $tagName = 'test-tag';
-        $tag = new MockTag($tagName);
-        
-        $this->assertSame($tagName, $tag->getName());
+        parent::setUp();
+
+        // TagInterfaceTest 只测试接口定义，不需要设置
     }
-    
-    public function testGetName_withEmptyName(): void
+
+    public function testInterfaceDefinesRequiredMethods(): void
     {
-        $tag = new MockTag('');
-        
-        $this->assertSame('', $tag->getName());
+        $reflection = new \ReflectionClass(TagInterface::class);
+
+        // 验证接口定义了所有必需的方法
+        self::assertTrue($reflection->hasMethod('getName'));
     }
-    
-    public function testGetName_withSpecialCharacters(): void
+
+    public function testInterfaceMethodSignatures(): void
     {
-        $specialTagName = '特殊标签!@#$%^&*()';
-        $tag = new MockTag($specialTagName);
-        
-        $this->assertSame($specialTagName, $tag->getName());
+        $reflection = new \ReflectionClass(TagInterface::class);
+
+        // 验证 getName 方法签名
+        $method = $reflection->getMethod('getName');
+        $returnType = $method->getReturnType();
+        $this->assertNotNull($returnType, '返回类型不应为null');
+        self::assertSame('string', $returnType->__toString());
+        self::assertCount(0, $method->getParameters());
     }
-    
-    public function testGetName_withWhitespaceCharacters(): void
+
+    public function testInterfaceIsInterface(): void
     {
-        $whitespaceTagName = "  \t\n\r  ";
-        $tag = new MockTag($whitespaceTagName);
-        
-        $this->assertSame($whitespaceTagName, $tag->getName());
+        $reflection = new \ReflectionClass(TagInterface::class);
+        self::assertTrue($reflection->isInterface());
     }
-    
-    public function testGetName_withVeryLongString(): void
+
+    public function testInterfaceHasCorrectNamespace(): void
     {
-        $longTagName = str_repeat('长标签名称', 100);
-        $tag = new MockTag($longTagName);
-        
-        $this->assertSame($longTagName, $tag->getName());
-        $this->assertGreaterThan(100, strlen($tag->getName()));
+        $reflection = new \ReflectionClass(TagInterface::class);
+        self::assertSame('Tourze\UserTagContracts', $reflection->getNamespaceName());
     }
-    
-    public function testGetName_withNumericString(): void
-    {
-        $numericTagName = '123456789';
-        $tag = new MockTag($numericTagName);
-        
-        $this->assertSame($numericTagName, $tag->getName());
-        $this->assertIsString($tag->getName());
-    }
-    
-    public function testGetName_withMixedContent(): void
-    {
-        $mixedTagName = 'Tag123_标签-test@domain.com';
-        $tag = new MockTag($mixedTagName);
-        
-        $this->assertSame($mixedTagName, $tag->getName());
-    }
-    
-    public function testGetName_withZeroWidthCharacters(): void
-    {
-        $zeroWidthTagName = "tag\u{200B}name";  // 零宽度空格
-        $tag = new MockTag($zeroWidthTagName);
-        
-        $this->assertSame($zeroWidthTagName, $tag->getName());
-    }
-    
-    public function testGetName_withEmojiCharacters(): void
-    {
-        $emojiTagName = '🏷️📝✅❌';
-        $tag = new MockTag($emojiTagName);
-        
-        $this->assertSame($emojiTagName, $tag->getName());
-    }
-    
-    public function testGetName_withUrlLikeString(): void
-    {
-        $urlTagName = 'https://example.com/tag?id=123&type=special';
-        $tag = new MockTag($urlTagName);
-        
-        $this->assertSame($urlTagName, $tag->getName());
-    }
-    
-    public function testGetName_withJsonLikeString(): void
-    {
-        $jsonTagName = '{"type":"tag","value":"test"}';
-        $tag = new MockTag($jsonTagName);
-        
-        $this->assertSame($jsonTagName, $tag->getName());
-    }
-    
-    public function testGetName_withSqlLikeString(): void
-    {
-        $sqlTagName = "SELECT * FROM tags WHERE name = 'test'";
-        $tag = new MockTag($sqlTagName);
-        
-        $this->assertSame($sqlTagName, $tag->getName());
-    }
-    
-    public function testGetName_consistencyAcrossMultipleCalls(): void
-    {
-        $tagName = 'consistent-tag';
-        $tag = new MockTag($tagName);
-        
-        $name1 = $tag->getName();
-        $name2 = $tag->getName();
-        $name3 = $tag->getName();
-        
-        $this->assertSame($name1, $name2);
-        $this->assertSame($name2, $name3);
-        $this->assertSame($tagName, $name1);
-    }
-    
-    public function testGetName_withControlCharacters(): void
-    {
-        $controlCharTagName = "tag\x01\x02\x03name";
-        $tag = new MockTag($controlCharTagName);
-        
-        $this->assertSame($controlCharTagName, $tag->getName());
-    }
-    
-    public function testGetName_withQuotesAndEscapes(): void
-    {
-        $quotedTagName = "tag'with\"quotes\\and\\escapes";
-        $tag = new MockTag($quotedTagName);
-        
-        $this->assertSame($quotedTagName, $tag->getName());
-    }
-} 
+}

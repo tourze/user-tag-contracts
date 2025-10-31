@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tourze\UserTagContracts;
 
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
